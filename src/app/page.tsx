@@ -38,7 +38,7 @@ export default function Home() {
       category: 'Mobile App',
       description: 'Music recognition and playlist management app with AI-powered recommendations',
       image: '/123.png',
-      tags: ['React Native', 'AI', 'Music API'],
+      tags: ['React Native', 'Music API'],
     },
     {
       id: '1',
