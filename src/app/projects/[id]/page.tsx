@@ -1,9 +1,31 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 
 // Mock data - nanti bisa diganti dengan data dari database atau API
-// Mock data - nanti bisa diganti dengan data dari database atau API
-const projectsData: Record<string, any> = {
+interface TechStack {
+  name: string;
+  icon: string;
+  color: string;
+}
+
+interface ProjectData {
+  id: string;
+  title: string;
+  category: string;
+  description: string;
+  fullDescription: string;
+  image: string;
+  githubUrl: string;
+  demoUrl: string;
+  techStack: TechStack[];
+  features: string[];
+  challenges: string[];
+  timeline: string;
+  role: string;
+}
+
+const projectsData: Record<string, ProjectData> = {
   '1': {
     id: '1',
     title: 'Solo Traveler',
@@ -134,7 +156,85 @@ const projectsData: Record<string, any> = {
     timeline: '1 week',
     role: 'Full Stack Developer',
   },
+  '5': {
+    id: '5',
+    title: 'Melodix',
+    category: 'Mobile App',
+    description: 'AI-powered music recognition app',
+    fullDescription:
+      'A React Native/Expo mobile app for music recognition and playlist management. Features Shazam-like audio recognition, concert discovery via Ticketmaster API, and Spotify/YouTube integration. Backend with MongoDB, Redis caching, and device-based authentication.',
+    image: '/123.png',
+    githubUrl: 'https://github.com/FINAL-PROJECT-HCK87/Final-Project-HCK87.git',
+    demoUrl:
+      'https://expo.dev/preview/update?message=fix%3A+update+color+for+delete+button+and+text+in+PlaylistDetailScreen%3B+add+expo-updates+dependency+in+package.json+and+package-lo&updateRuntimeVersion=1.0.0&createdAt=2025-10-21T07%3A12%3A16.708Z&slug=exp&projectId=521cf54a-2018-45de-bde6-dfa3bcb84b61&group=846a11b7-321b-4c9a-974c-b8fcf7d1f7fa ',
+    techStack: [
+      { name: 'React Native', icon: '📱', color: 'bg-blue-500' },
+      { name: 'Expo', icon: '🟣', color: 'bg-purple-600' },
+      { name: 'TypeScript', icon: '💠', color: 'bg-blue-600' },
+      { name: 'MongoDB', icon: '🍃', color: 'bg-green-600' },
+      { name: 'Shazam API', icon: '🎵', color: 'bg-indigo-600' },
+      { name: 'Spotify API', icon: '🎧', color: 'bg-green-500' },
+      { name: 'Ticketmaster', icon: '🎫', color: 'bg-cyan-600' },
+    ],
+    features: [
+      'Audio/Video music recognition',
+      'Search history management',
+      'Playlist creation & sharing',
+      'Artist concert information',
+      'Spotify & YouTube integration',
+      'Device-based authentication',
+      'Top trending songs',
+    ],
+    challenges: [
+      'Integrating multiple music APIs (Shazam, Spotify, YouTube)',
+      'Implementing swipe-to-delete in playlists',
+      'Managing shared playlists across devices',
+      'Optimizing audio recognition performance',
+    ],
+    timeline: '2 weeks',
+    role: 'Full Stack Developer',
+  },
 };
+
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  const project = projectsData[params.id];
+
+  if (!project) {
+    return {
+      title: 'Project Not Found - Gerry Gurusinga',
+      description: 'The requested project could not be found.',
+    };
+  }
+
+  return {
+    title: `${project.title} - Gerry Gurusinga`,
+    description: project.fullDescription,
+    keywords: [
+      project.title,
+      'Gerry Gurusinga',
+      project.category,
+      ...project.techStack.map((tech) => tech.name),
+    ],
+    authors: [{ name: 'Gerry Gurusinga' }],
+    openGraph: {
+      title: `${project.title} - Gerry Gurusinga`,
+      description: project.fullDescription,
+      type: 'website',
+      images: [
+        {
+          url: project.image,
+          alt: project.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${project.title} - Gerry Gurusinga`,
+      description: project.description,
+      images: [project.image],
+    },
+  };
+}
 
 export default function ProjectDetail({ params }: { params: { id: string } }) {
   const project = projectsData[params.id];
@@ -281,7 +381,7 @@ export default function ProjectDetail({ params }: { params: { id: string } }) {
                 TECH STACK
               </h3>
               <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                {project.techStack.map((tech: any, index: number) => (
+                {project.techStack.map((tech: TechStack, index: number) => (
                   <div
                     key={index}
                     className="flex flex-col items-center gap-2 sm:gap-3 p-3 sm:p-4 bg-gray-800/40 rounded-lg sm:rounded-xl border border-gray-700/30 hover:border-gray-600/50 transition-all group cursor-pointer hover:scale-105"

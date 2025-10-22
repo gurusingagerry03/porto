@@ -1,14 +1,52 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Gerry Gurusinga - Software Developer Portfolio',
+  description:
+    'Full-stack developer based in Jakarta. Specializing in React, Next.js, React Native, Node.js, and AI integrations. View my projects and get in touch.',
+  keywords: [
+    'Gerry Gurusinga',
+    'Software Developer',
+    'Full Stack Developer',
+    'React',
+    'Next.js',
+    'React Native',
+    'Node.js',
+    'Portfolio',
+  ],
+  authors: [{ name: 'Gerry Gurusinga' }],
+  openGraph: {
+    title: 'Gerry Gurusinga - Software Developer',
+    description: 'Full-stack developer specializing in modern web and mobile applications',
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Gerry Gurusinga - Software Developer',
+    description: 'Full-stack developer portfolio',
+  },
+};
 
 export default function Home() {
   const projects = [
+    {
+      id: '5',
+      title: 'Melodix',
+      category: 'Mobile App',
+      description: 'Music recognition and playlist management app with AI-powered recommendations',
+      image: '/123.png',
+      tags: ['React Native', 'AI', 'Music API'],
+    },
     {
       id: '1',
       title: 'Solo Traveler',
       category: 'Web App',
       description: 'Trip group chat',
       image: '/soloTravaler.png',
+      tags: ['Real-time Chat', 'WebSocket'],
     },
     {
       id: '2',
@@ -16,6 +54,7 @@ export default function Home() {
       category: 'E-commerce',
       description: 'E-commerce prototype',
       image: '/adidas.png',
+      tags: ['E-commerce', 'Next.js'],
     },
     {
       id: '3',
@@ -23,6 +62,7 @@ export default function Home() {
       category: 'Web App',
       description: 'AI match insights',
       image: '/footbaal.png',
+      tags: ['AI', 'Sports Analytics'],
     },
     {
       id: '4',
@@ -30,6 +70,7 @@ export default function Home() {
       category: 'Mobile App',
       description: 'Pet social network',
       image: '/zoogram.png',
+      tags: ['Social Media', 'Mobile'],
     },
   ];
 
@@ -170,31 +211,74 @@ export default function Home() {
 
         {/* Projects Section */}
         <div className="mb-16 sm:mb-20 lg:mb-28">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 tracking-tight font-[family-name:var(--font-audiowide)]">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 tracking-tight font-[family-name:var(--font-audiowide)]">
             PROJECTS
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {projects.map((project, index) => (
               <Link key={index} href={`/projects/${project.id}`} className="group cursor-pointer">
-                <div className="bg-gradient-to-b from-gray-800/40 to-gray-900/60 backdrop-blur-md border border-gray-700/50 rounded-2xl overflow-hidden hover:border-gray-500/70 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-2">
+                <div className="relative bg-gradient-to-br from-gray-600/40 to-gray-700/60 backdrop-blur-md border border-gray-700/50 rounded-2xl overflow-hidden hover:border-gray-500/80 transition-all duration-500 hover:shadow-2xl hover:shadow-gray-500/10 h-full hover:-translate-y-1">
                   {/* Project Image */}
                   <div className="relative aspect-[4/3] bg-gray-900 overflow-hidden">
                     <Image
                       src={project.image}
                       alt={project.title}
                       fill
-                      className="object-cover"
+                      className="object-cover group-hover:scale-110 transition-transform duration-700 brightness-[0.65] group-hover:brightness-50"
                       quality={90}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
-                  </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-black/10 to-black/10"></div>
 
-                  {/* Project Info */}
-                  <div className="p-5">
-                    <h3 className="text-base font-semibold text-white mb-2 group-hover:text-blue-400 transition-colors font-[family-name:var(--font-audiowide)]">
-                      {project.title}
-                    </h3>
-                    <p className="text-xs text-gray-400 leading-relaxed">{project.description}</p>
+                    {/* Content Overlay */}
+                    <div className="absolute inset-0 p-6 flex flex-col">
+                      {/* Category Badge - Top Right */}
+                      <div className="flex justify-end mb-auto">
+                        <div className="inline-block px-3 py-1.5 bg-white/20 backdrop-blur-md border border-white/30 rounded-lg text-xs font-bold text-white shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
+                          {project.category}
+                        </div>
+                      </div>
+
+                      {/* Bottom Content */}
+                      <div>
+                        {/* Title */}
+                        <h3
+                          className="text-xl sm:text-2xl font-black text-white mb-2 group-hover:scale-105 transition-all duration-300 font-[family-name:var(--font-audiowide)]"
+                          style={{
+                            textShadow:
+                              '2px 2px 0px rgba(0,0,0,0.9), 4px 4px 8px rgba(0,0,0,0.8), 0px 0px 20px rgba(0,0,0,0.6)',
+                          }}
+                        >
+                          {project.title}
+                        </h3>
+
+                        {/* Description */}
+                        <p
+                          className="text-sm text-white leading-relaxed mb-3 font-medium"
+                          style={{
+                            textShadow: '1px 1px 2px rgba(0,0,0,0.9), 2px 2px 6px rgba(0,0,0,0.7)',
+                          }}
+                        >
+                          {project.description}
+                        </p>
+
+                        {/* Tags */}
+                        <div className="flex flex-wrap gap-2">
+                          {project.tags.map((tag, idx) => (
+                            <span
+                              key={idx}
+                              className="px-2.5 py-1 bg-white/15 backdrop-blur-md border border-white/25 rounded text-xs text-white font-semibold hover:bg-white/25 transition-colors shadow-[0_2px_8px_rgba(0,0,0,0.6)]"
+                              style={{
+                                textShadow: '1px 1px 3px rgba(0,0,0,0.8)',
+                              }}
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </Link>
